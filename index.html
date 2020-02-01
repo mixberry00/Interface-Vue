@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Расписание занятия детского центра</title>
+<meta charset="utf-8"/>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <a href="localhost:3000"><img class="sun" src="images/sun.png" height="150px" width="150px"></a>
+    <img class="cloud" src="images/cloud.png" height="150px" width="200px">
+    <div style="padding: 75px;"></div>
+    <div id="schedule">
+        <input class="flb srchb" value="Поиск по возрасту" type="button" v-on:click="showwindowsrch">
+        <div id="funcs">
+            <div ref="change" class="addch">
+                <input class="bexit" type="button" value="X" v-on:click="closewindow">
+                <div ref="ag" style="display: none;">
+                    <span ref="aem" class="empty" style="display: none;">Заполните все поля!</span>
+                    <p class="descr">Введите возраст:</p>                   
+                    <input id="AgeL" class="entert en" type="number" v-model.number="newAgeL" min="2" v-bind:max="newAgeH" onkeypress="return false">
+                    <input id="AgeH" class="entert en" type="number" v-model.number="newAgeH" v-bind:min="newAgeL" max="18" onkeypress="return false"><br>
+                    <input class="add" type="button" value="Добавить" v-on:click="AddAges()">
+                </div>
+                <div ref="tsk" style="display: none;">
+                    <span ref="tem" class="empty" style="display: none;">Заполните все поля!</span>
+                    <span ref="tbusy" class="empty" style="display: none;">В данное время проводится занятие!</span>
+                    <p class="descr">Название занятия:</p>
+                    <span ref="tn" style="display: none;">Некорректный ввод наименования занятия.<br> Присутствуют цифры.</span>            
+                    <input ref="tne" class="entert" v-model="tName" type="text"><br>
+                    <p class="descr">Фамилия преподавателя:</p>
+                    <select class="entert" v-model="tchName">
+                        <option v-for="teacher in teachers">{{teacher}}</option>
+                    </select><br>
+                    <p class="descr">Возрастное ограничение:</p>
+                    <input id="AgeL" class="entert en" type="number" v-model.number="tAgeL" min="2" v-bind:max="tAgeH" onkeypress="return false">
+                    <input id="AgeH" class="entert en" type="number" v-model.number="tAgeH" v-bind:min="tAgeL" max="18" onkeypress="return false"><br>
+                    <p class="descr">Время занятия:</p>
+                    <select class="entert" v-model="ttime">
+                        <option v-for="time in times">{{time}}</option>
+                    </select><br>
+                    <p class="descr">День занятия:</p>
+                    <select class="entert" v-model="tday">
+                        <option v-for="day in days">{{day}}</option>
+                    </select><br>
+                    <p class="descr">Кабинет:</p>
+                    <input class="entert" v-model="tcab" type="text"><br>
+                    <input class="add" type="button" value="Добавить" v-on:click="addTask(tName, tchName, tAgeL, tAgeH, ttime, tday, tcab)">
+                </div>
+                <div ref="dds" style="display: none;">
+                    <span ref="dem" class="empty" style="display: none;">Выберите из списка!</span>
+                    <p class="descr">Выберите день недели:</p>            
+                    <select class="entert" v-model="chday">
+                        <option v-for="day in days">{{day}}</option>
+                    </select><br>
+                    <input class="add" type="button" value="Посмотреть" v-on:click="CheckDay()">
+                </div>
+                <div ref="dsh" style="display: none;">
+                    <div id="conttskdays" v-for="task in Tasks" v-if="task.TimeDay.Day == chday">
+                        <span>Занятие: {{task.Task}} </span><br>
+                        <span>Преподаватель: {{task.Teacher}} </span><br>
+                        <span>Возраст: от {{task.L}} до {{task.H}} </span><br>
+                        <span>Время: {{task.TimeDay.Time}} </span><br>
+                        <span>День: {{task.TimeDay.Day}} </span><br>
+                        <span>Кабинет: {{task.Cab}} </span>
+                    </div>
+                </div>
+                <div ref="tchr" style="display: none;">
+                    <span ref="tchem" class="empty" style="display: none;">Заполните поле!</span>
+                    <p class="descr">Введите инициалы преподавателя:</p>
+                    <span ref="tchn" style="display: none;">Некорректный ввод инициалов<br> преподавателя. Присутствуют цифры.</span>           
+                    <input ref="tchne" class="entert" type="text" v-model="newTeacher"><br>
+                    <input class="add" type="button" value="Добавить" v-on:click="AddTeacher()">
+                </div>
+                <div ref="srch" style="display: none;">
+                    <span ref="srchem" class="empty" style="display: none;">Заполните поле!</span>
+                    <p class="descr">Введите возраст:</p>         
+                    <input id="AgeL" class="entert en" type="number" v-model.number="srchAge" min="2" max="18" onkeypress="return false" style="width: 217px;"><br>
+                    <input class="add" type="button" value="Показать" v-on:click="Search()">
+                </div>
+                <div ref="srchsh" style="display: none;">
+                    <div id="conttskdays1" v-for="task in Tasks" v-if="task.L <= srchAge && task.H >= srchAge">
+                        <span>Занятие: {{task.Task}} </span><br>
+                        <span>Преподаватель: {{task.Teacher}} </span><br>
+                        <span>Возраст: от {{task.L}} до {{task.H}} </span><br>
+                        <span>Время: {{task.TimeDay.Time}} </span><br>
+                        <span>День: {{task.TimeDay.Day}} </span><br>
+                        <span>Кабинет: {{task.Cab}} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="functions">
+                <form>
+                    <ul class="funclist">
+                        <li class="flelem">
+                            <input class="flb" value="Добавить новую категорию детей" type="button" v-on:click="showwindowch" >                        
+                        </li>
+                        <li class="flelem">
+                            <input class="flb" value="Добавить новое занятие" type="button" v-on:click="showwindowtsk" >
+                        </li>
+                        <li class="flelem">
+                            <input class="flb" value="Просмотр занятия за день недели" type="button" v-on:click="showwindowchk" >
+                        </li>
+                        <li class="flelem">
+                            <input class="flb" value="Добавить нового преподавателя" type="button" v-on:click="showwindowtch" >
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+        <hr class="Line">
+        <span class="schedulename">Распиание детского центра</span>
+        <div class="schedule">
+            <table id="dyntable" class="schd">
+                <thead>
+                    <th style="visibility: hidden;"></th>
+                    <th class="tabtchr" v-for="(teacher, index) in teachers" v-bind:id="[tchr] + [index]">{{teacher}}</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Понедельник</td>
+                    </tr>
+                    <tr v-for="(time, p_index) in times" v-bind:id="[ts] + [p_index]">
+                        <td>{{time}}</td>
+                        <td class="task" v-for="(teacher, index) in teachers" v-bind:id="[td] + [p_index] + ',' + [index]" v-bind:ref="[p_index] + ',' + [index]"></td>
+                    </tr>
+                    <tr>
+                        <td>Вторник</td>
+                    </tr>
+                    <tr v-for="(time, p_index) in times" v-bind:id="[ts] + [p_index + 6]">
+                        <td>{{time}}</td>
+                        <td class="task" v-for="(teacher, index) in teachers" v-bind:id="[td] + [p_index+6] + ',' + [index]" v-bind:ref="[p_index] + ',' + [index]"></td>
+                    </tr>
+                    <tr>
+                        <td>Среда</td>
+                    </tr>
+                    <tr v-for="(time, p_index) in times" v-bind:id="[ts] + [p_index + 12]">
+                        <td>{{time}}</td>
+                        <td class="task" v-for="(teacher, index) in teachers" v-bind:id="[td] + [p_index+12] + ',' + [index]" v-bind:ref="[p_index] + ',' + [index]"></td>
+                    </tr>
+                    <tr>
+                        <td>Четверг</td>
+                    </tr>
+                    <tr v-for="(time, p_index) in times" v-bind:id="[ts] + [p_index + 18]">
+                        <td>{{time}}</td>
+                        <td class="task" v-for="(teacher, index) in teachers" v-bind:id="[td] + [p_index+18] + ',' + [index]" v-bind:ref="[p_index] + ',' + [index]"></td>
+                    </tr>
+                    <tr>
+                        <td>Пятница</td>
+                    </tr>
+                    <tr v-for="(time, p_index) in times" v-bind:id="[ts] + [p_index + 24]">
+                        <td>{{time}}</td>
+                        <td class="task" v-for="(teacher, index) in teachers" v-bind:id="[td] + [p_index+24] + ',' + [index]" v-bind:ref="[p_index] + ',' + [index]"></td>
+                    </tr>
+                    <tr>
+                        <td>Суббота</td>
+                    </tr>
+                    <tr v-for="(time, p_index) in times" v-bind:id="[ts] + [p_index + 30]">
+                        <td>{{time}}</td>
+                        <td class="task" v-for="(teacher, index) in teachers" v-bind:id="[td] + [p_index+30] + ',' + [index]" v-bind:ref="[p_index] + ',' + [index]"></td>
+                    </tr>
+                    <tr>
+                        <td>Воскресенье</td>
+                    </tr>
+                    <tr v-for="(time, p_index) in times" v-bind:id="[ts] + [p_index + 36]">
+                        <td>{{time}}</td>
+                        <td class="task" v-for="(teacher, index) in teachers" v-bind:id="[td] + [p_index+36] + ',' + [index]" v-bind:ref="[p_index] + ',' + [index]"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<script src="vue.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

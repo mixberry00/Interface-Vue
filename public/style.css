@@ -1,0 +1,187 @@
+body{
+    background-image: url(images/bs.png);
+}
+.sun{
+    position: absolute;
+}
+.cloud{
+    position: absolute;
+    margin-left: 81%;
+    margin-top: 35%;
+    z-index: 500;
+}
+.srch{
+    position: relative;
+}
+.functions{
+    position: absolute;
+    margin-left:75%;
+}
+.funclist{
+    position: absolute;
+    list-style-type: none;
+}
+.flelem{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-block-start: auto;
+}
+.flb{
+    background: rgba(255, 255, 255, 0.5);
+    font-weight: 700;
+    border-radius: 15px;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+    outline: none;
+}
+.srchb{
+    margin-left: 50%;
+    width: 250px;
+    position: absolute;
+}
+.Line{
+    position: absolute;
+    background-color: rgba(255, 182, 193, 0.5);
+    border: none;
+    z-index: -1;
+    top: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+    left: 77%;
+    width: 310px;
+    height: 2575px;
+}
+.schedule{
+    position: relative;
+    margin-top: 10px;
+    margin-right: 30%;
+    border: solid pink 2px;
+    border-radius: 30px;
+    background-color: plum;
+}
+.schd{
+    text-align: center;
+    border-collapse: separate; 
+    border-spacing: 15px;
+}
+.schd td {
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+    border: solid pink 2px;
+    border-radius: 30px;
+    padding: 5px;
+    background-color: rgb(245, 220, 237);
+}
+.schd th {
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+    border: solid pink 2px;
+    border-radius: 30px;
+    padding: 5px;
+    background-color: rgb(245, 220, 237);
+}
+
+.addch{
+    z-index:9999;
+    position:absolute;
+    margin: 0 10% 10% 33%;
+    top:100px;
+    background-color:#ffffff;
+    display: none;
+    color: midnightblue;
+    font-style:normal;
+    font-size:15px;
+    font-weight:300;
+    font-family: inherit;
+    padding: 50px 100px;
+    border: solid pink 2px;
+    border-radius: 30px; 
+    background-image: url(images/bs.png);
+}
+.bexit{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: solid rgb(144, 220, 255) 1px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;    
+}
+.entert{
+    border: solid pink 1px;
+    border-radius: 10px;
+    background-color: cornsilk;
+    padding: 10px;
+    margin-bottom: 5px;
+    outline: none;
+    width: 217px;
+}
+.en{
+    width: 85px;
+}
+.empty{
+    text-align: center;
+    border: solid red 1px;
+    border-radius: 10px;
+    background-color: cornsilk;
+}
+.descr{
+    width:160px;
+    margin-left: 5px;
+}
+.add{
+    margin-left: 70px;
+    border-radius: 10px;
+    background-color: rgb(255, 192, 203);
+    padding: 10px;
+    outline: none;
+    cursor: pointer;
+    display: inline;
+}
+.d{
+    margin-left: 60px;
+}
+.ad{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.v{
+    margin-left: 30%;
+}
+.schedulename{
+    position: relative;
+    color: rgba(84, 66, 240, 0.5);
+    margin: 15px 0;
+    font-family: fantasy;
+    font-size: x-large;
+}
+.tabtchr{
+    width: 150px;
+}
+.task{
+    visibility: hidden;
+}
+#conttskdays{
+    padding: 5px;
+    margin-bottom: 3px;
+    background-color: rgb(245, 220, 237);
+    border: 1px solid cyan;
+    border-radius: 15px;
+}
+#conttskdays1{
+    padding: 5px;
+    margin-bottom: 3px;
+    background-color: rgb(245, 220, 237);
+    border: 1px solid cyan;
+    border-radius: 15px;
+}
+.emptymess{
+    display: none;
+    padding: 60px 120px;
+    font-size: 24;
+    font-weight: 700;
+}
